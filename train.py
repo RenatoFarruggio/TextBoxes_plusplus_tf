@@ -175,7 +175,7 @@ tf.app.flags.DEFINE_float(
 # Dataset Flags.
 # =========================================================================== #
 tf.app.flags.DEFINE_string(
-	'dataset_name', 'icdar2015',
+	'dataset_name', 'SynthText',
     'The name of the dataset to load.'
 )
 tf.app.flags.DEFINE_integer(
