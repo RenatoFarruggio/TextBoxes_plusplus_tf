@@ -277,10 +277,13 @@ def cvt_to_tfrecords(output_path , data_path, gt_path, records_per_file = 30000)
                 image_path, image, txts, rect_bboxes, oriented_bboxes = record
                 labels = len(rect_bboxes) * [1]
                 ignored = len(rect_bboxes) * [0]
-                image_data = tf.gfile.FastGFile(image_path, 'r').read()
+                print('IMG_PATH: ' + image_path)
+                image_data = tf.gfile.FastGFile(image_path, 'rb').read()
                 
                 shape = image.shape
-                image_name = str(util.io.get_filename(image_path).split('.')[0])
+                image_name = str(os.path.basename(image_path).split('.')[0])
+                print('IMG_NAME: ' + image_name)
+                #image_name = str(util.io.get_filename(image_path).split('.')[0])
                 example = convert_to_example(image_data, image_name, labels, ignored, txts, rect_bboxes, oriented_bboxes, shape)
                 tfrecord_writer.write(example.SerializeToString())
                 record_count += 1
