@@ -1,9 +1,12 @@
+import os
 import time
 import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
-import util
+#import util
+import scipy.io
 
+from PIL import Image
 
 def int64_feature(value):
     """Wrapper for inserting int64 features into Example proto.
@@ -80,12 +83,14 @@ def convert_to_example(image_data, filename, labels, ignored, labels_text, bboxe
 
 
 def get_split(split_name, dataset_dir, file_pattern, num_samples, reader=None):
-    dataset_dir = util.io.get_absolute_path(dataset_dir)
+    dataset_dir = os.path.abspath(dataset_dir)
     
-    if util.str.contains(file_pattern, '%'):
-        file_pattern = util.io.join_path(dataset_dir, file_pattern % split_name)
+    if str(filepattern).contains('%'):
+        print("PLEASE IMPLEMENT ME IN SYNTHTEXT2TFRECORDS_SELF.PY!!")
+        exit()
+        #file_pattern = util.io.join_path(dataset_dir, file_pattern % split_name)
     else:
-        file_pattern = util.io.join_path(dataset_dir, file_pattern)
+        file_pattern = os.path.join(dataset_dir, file_pattern)
     # Allowing None in the signature so that dataset_factory can use the default.
     if reader is None:
         reader = tf.TFRecordReader
@@ -161,7 +166,7 @@ class SynthTextDataFetcher():
         self.num_images =  len(self.image_paths)
 
     def get_image_path(self, idx):
-        image_path = util.io.join_path(self.root_path, self.image_paths[idx][0])
+        image_path = os.path.join(self.root_path, self.image_paths[idx][0])
         return image_path
 
     def get_num_words(self, idx):
@@ -221,9 +226,10 @@ class SynthTextDataFetcher():
         
     def fetch_record(self, image_idx):
         image_path = self.get_image_path(image_idx)
-        if not (util.io.exists(image_path)):
+        if not (os.path.exists(image_path)):
             return None
-        img = util.img.imread(image_path)
+        img = np.array(Image.open(image_path))
+        #img = util.img.imread(image_path)
         h, w = img.shape[0:-1]
         num_words = self.get_num_words(image_idx)
         rect_bboxes = []
@@ -278,10 +284,18 @@ def cvt_to_tfrecords(output_path , data_path, gt_path, records_per_file = 30000)
         fid += 1
                     
 if __name__ == "__main__":
-    mat_path = util.io.get_absolute_path('/share/SynthText/gt.mat')
-    root_path = util.io.get_absolute_path('/share/SynthText/')
-    output_dir = util.io.get_absolute_path('/home/zsz/datasets/synth-tf/')
-    util.io.mkdir(output_dir)
-    cvt_to_tfrecords(output_path = util.io.join_path(output_dir, 'SynthText_%d.tfrecord'),
+    mat_path = os.path.abspath(os.getcwd() + '/share/SynthText/gt.mat')
+    #mat_path = util.io.get_absolute_path('/share/SynthText/gt.mat')
+    root_path = os.path.abspath(os.getcwd() + '/share/SynthText/')
+    #root_path = util.io.get_absolute_path('/share/SynthText/')
+    output_dir = os.path.abspath('/home/bob/datasets/synth-tf/')
+    #output_dir = util.io.get_absolute_path('/home/zsz/datasets/synth-tf/')
+    try:
+        os.mkdir(output_dir)
+    except FileExistsError:
+        pass
+    #util.io.mkdir(output_dir)
+    #cvt_to_tfrecords(output_path = util.io.join_path(output_dir, 'SynthText_%d.tfrecord'),
+    cvt_to_tfrecords(output_path = os.path.join(output_dir, 'SynthText_%d.tfrecord'),
                      data_path = root_path,
                      gt_path = mat_path)
