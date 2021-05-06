@@ -1,4 +1,12 @@
 import os
+
+use_gpu = False
+
+if use_gpu:
+    os.environ['CUDA_VISIBLE_DEVICES']= '6,7' # using GPU 0
+else:
+    os.environ['CUDA_VISIBLE_DEVICES']= '-1'   # using only CPU
+
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 from tensorflow.python.ops import control_flow_ops
@@ -8,9 +16,6 @@ from deployment import model_deploy
 from datasets import TFrecords2Dataset
 from nets import txtbox_384, txtbox_768
 from processing import ssd_vgg_preprocessing
-
-# assign the specific training gpu
-os.environ['CUDA_VISIBLE_DEVICES'] = '6,7'
 
 # =========================================================================== #
 # Textboxes++ Network flags.
