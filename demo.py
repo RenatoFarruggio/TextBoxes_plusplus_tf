@@ -1,5 +1,12 @@
 import os
 
+use_gpu = False
+
+if use_gpu:
+    os.environ['CUDA_VISIBLE_DEVICES']= '6,7' # using GPU 0
+else:
+    os.environ['CUDA_VISIBLE_DEVICES']='-1'   # using only CPU
+
 import tensorflow as tf
 import cv2
 import tensorflow.contrib.slim as slim
@@ -11,8 +18,6 @@ sys.path.append('./')
 
 from nets import txtbox_384, np_methods, txtbox_768
 from processing import ssd_vgg_preprocessing
-
-os.environ['CUDA_VISIBLE_DEVICES'] = '6,7' #using GPU 0
 
 def plt_bboxes(img, classes, scores, bboxes, figsize=(10,10), linewidth=1.5):
     """Visualize bounding boxes. Largely inspired by SSD-MXNET!
@@ -34,10 +39,14 @@ def plt_bboxes(img, classes, scores, bboxes, figsize=(10,10), linewidth=1.5):
             img = cv2.rectangle(img, (xmin, ymin), (xmax, ymax), (255, 0, 0))
     return img
 
-# configure tf GPU using options.
-gpu_options = tf.GPUOptions(allow_growth=False, per_process_gpu_memory_fraction=0.3)
-config = tf.ConfigProto(log_device_placement=False, gpu_options=gpu_options)
-isess = tf.Session(config=config) 
+if use_gpu:
+    # configure tf GPU using options.
+    gpu_options = tf.GPUOptions(allow_growth=False, per_process_gpu_memory_fraction=0.3)
+    config = tf.ConfigProto(log_device_placement=False, gpu_options=gpu_options)
+    isess = tf.Session(config=config) 
+else:
+    config=tf.ConfigProto(log_device_placement=True)
+    isess = tf.Session(config=config)
 
 # Input placeholder.
 net_shape = (384, 384)
@@ -60,11 +69,12 @@ with slim.arg_scope(txt_net.arg_scope(data_format='NHWC')):
 
 ckpt_dir = 'model'
 
+# REMINDER: THIS CREATES A LOT OF OUTPUT
 isess.run(tf.global_variables_initializer())
 
 saver = tf.train.Saver()
-
 ckpt_filename = tf.train.latest_checkpoint(ckpt_dir)
+
 if ckpt_dir and ckpt_filename:
     print('checkpoint:',ckpt_dir, os.getcwd(), ckpt_filename)
     saver.restore(isess, ckpt_filename)
@@ -107,4 +117,4 @@ if ckpt_dir and ckpt_filename:
     cv2.imwrite(os.path.join(path,'demo_res.png'), img_with_bbox)
     print('detection finished')
 else:
-    raise ('no ckpt')
+    raise Exception('no ckpt')
