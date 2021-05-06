@@ -84,7 +84,7 @@ def convert_to_example(image_data, filename, labels, ignored, labels_text, bboxe
 
 def get_split(split_name, dataset_dir, file_pattern, num_samples, reader=None):
     dataset_dir = os.path.abspath(dataset_dir)
-    
+
     if str(filepattern).contains('%'):
         print("PLEASE IMPLEMENT ME IN SYNTHTEXT2TFRECORDS_SELF.PY!!")
         exit()
@@ -156,12 +156,12 @@ class SynthTextDataFetcher():
         self.mat_path = mat_path
         self.root_path = root_path
         self._load_mat()
-        
-    # @util.dec.print_calling    
+
+    # @util.dec.print_calling
     def _load_mat(self):
-        assert os.path.exists(self.mat_path), 'Dataset mat not found at: {}'.format(filename)
-        if not os.path.isfile(file_path):
-            raise ValueError("File not found: " + file_path)
+        assert os.path.exists(self.mat_path), 'Dataset mat not found at: {}'.format(self.mat_path)
+        if not os.path.isfile(self.mat_path):
+            raise ValueError("File not found: " + self.math_path)
         data = scipy.io.loadmat(self.mat_path)
         #data = util.io.load_mat(self.mat_path)
         self.image_paths = data['imnames'][0]
@@ -295,7 +295,7 @@ if __name__ == "__main__":
     #mat_path = util.io.get_absolute_path('/share/SynthText/gt.mat')
     root_path = os.path.abspath(os.getcwd() + '/share/SynthText/')
     #root_path = util.io.get_absolute_path('/share/SynthText/')
-    output_dir = os.path.abspath('/home/bob/datasets/synth-tf/')
+    output_dir = os.path.abspath('/tank/rfarruggio/datasets/synth-tf/')
     #output_dir = util.io.get_absolute_path('/home/zsz/datasets/synth-tf/')
     try:
         os.mkdir(output_dir)
