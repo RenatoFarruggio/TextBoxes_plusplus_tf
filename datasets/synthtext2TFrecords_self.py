@@ -73,10 +73,10 @@ def convert_to_example(image_data, filename, labels, ignored, labels_text, bboxe
             'image/object/bbox/x4': float_feature(list(oriented_bboxes[:, 6])),
             'image/object/bbox/y4': float_feature(list(oriented_bboxes[:, 7])),
             'image/object/bbox/label': int64_feature(labels),
-            'image/object/bbox/label_text': bytes_feature(labels_text),
+            'image/object/bbox/label_text': bytes_feature([item.encode('utf-8') for item in labels_text]),
             'image/object/bbox/ignored': int64_feature(ignored),
             'image/format': bytes_feature(image_format),
-            'image/filename': bytes_feature(filename),
+            'image/filename': bytes_feature(filename.encode('utf-8')),
             'image/encoded': bytes_feature(image_data)}))
     return example
 
@@ -277,12 +277,12 @@ def cvt_to_tfrecords(output_path , data_path, gt_path, records_per_file = 30000)
                 image_path, image, txts, rect_bboxes, oriented_bboxes = record
                 labels = len(rect_bboxes) * [1]
                 ignored = len(rect_bboxes) * [0]
-                print('IMG_PATH: ' + image_path)
+                #print('IMG_PATH: ' + image_path)
                 image_data = tf.gfile.FastGFile(image_path, 'rb').read()
                 
                 shape = image.shape
                 image_name = str(os.path.basename(image_path).split('.')[0])
-                print('IMG_NAME: ' + image_name)
+                #print('IMG_NAME: ' + image_name)
                 #image_name = str(util.io.get_filename(image_path).split('.')[0])
                 example = convert_to_example(image_data, image_name, labels, ignored, txts, rect_bboxes, oriented_bboxes, shape)
                 tfrecord_writer.write(example.SerializeToString())
