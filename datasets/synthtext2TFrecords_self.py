@@ -159,7 +159,11 @@ class SynthTextDataFetcher():
         
     # @util.dec.print_calling    
     def _load_mat(self):
-        data = util.io.load_mat(self.mat_path)
+        assert os.path.exists(self.mat_path), 'Dataset mat not found at: {}'.format(filename)
+        if not os.path.isfile(file_path):
+            raise ValueError("File not found: " + file_path)
+        data = scipy.io.loadmat(self.mat_path)
+        #data = util.io.load_mat(self.mat_path)
         self.image_paths = data['imnames'][0]
         self.image_bbox = data['wordBB'][0]
         self.txts = data['txt'][0]
