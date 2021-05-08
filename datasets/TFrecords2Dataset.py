@@ -16,8 +16,8 @@ ITEMS_TO_DESCRIPTIONS = {
 
 SPLITS_TO_SIZES = {
     #'train': 2518 # for ppt datasets
-    #'train': 858750 # for synth text datasets
-    'train': 1000 # for icdar 2015 datasets
+    'train': 858750 # for synth text datasets
+    #'train': 1000 # for icdar 2015 datasets
 }
 
 NUM_CLASSES = 2
@@ -26,9 +26,9 @@ def get_datasets(data_dir, file_pattern = '*.tfrecord'):
     file_patterns = os.path.join(data_dir, file_pattern)
     print('file_path: {}'.format(file_patterns))
     file_path_list = glob.glob(file_patterns)
-    num_samples = 0
+    #num_samples = 0      #only for icdar 2015 dataset
     #num_samples = 288688 #only for ppt datasets
-    #num_samples = 858750 #only for synth datasets
+    num_samples = 858750 #only for synth datasets
 
     for file_path in file_path_list:
         for _ in tf.python_io.tf_record_iterator(file_path):
