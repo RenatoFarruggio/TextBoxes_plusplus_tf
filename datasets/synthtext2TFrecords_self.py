@@ -73,10 +73,10 @@ def convert_to_example(image_data, filename, labels, ignored, labels_text, bboxe
             'image/object/bbox/x4': float_feature(list(oriented_bboxes[:, 6])),
             'image/object/bbox/y4': float_feature(list(oriented_bboxes[:, 7])),
             'image/object/bbox/label': int64_feature(labels),
-            'image/object/bbox/label_text': bytes_feature(labels_text),
+            'image/object/bbox/label_text': bytes_feature([item.encode('utf-8') for item in labels_text]),
             'image/object/bbox/ignored': int64_feature(ignored),
             'image/format': bytes_feature(image_format),
-            'image/filename': bytes_feature(filename),
+            'image/filename': bytes_feature(filename.encode('utf-8')),
             'image/encoded': bytes_feature(image_data)}))
     return example
 
@@ -84,7 +84,7 @@ def convert_to_example(image_data, filename, labels, ignored, labels_text, bboxe
 
 def get_split(split_name, dataset_dir, file_pattern, num_samples, reader=None):
     dataset_dir = os.path.abspath(dataset_dir)
-    
+
     if str(filepattern).contains('%'):
         print("PLEASE IMPLEMENT ME IN SYNTHTEXT2TFRECORDS_SELF.PY!!")
         exit()
@@ -156,12 +156,12 @@ class SynthTextDataFetcher():
         self.mat_path = mat_path
         self.root_path = root_path
         self._load_mat()
-        
-    # @util.dec.print_calling    
+
+    # @util.dec.print_calling
     def _load_mat(self):
-        assert os.path.exists(self.mat_path), 'Dataset mat not found at: {}'.format(filename)
-        if not os.path.isfile(file_path):
-            raise ValueError("File not found: " + file_path)
+        assert os.path.exists(self.mat_path), 'Dataset mat not found at: {}'.format(self.mat_path)
+        if not os.path.isfile(self.mat_path):
+            raise ValueError("File not found: " + self.math_path)
         data = scipy.io.loadmat(self.mat_path)
         #data = util.io.load_mat(self.mat_path)
         self.image_paths = data['imnames'][0]
@@ -277,12 +277,12 @@ def cvt_to_tfrecords(output_path , data_path, gt_path, records_per_file = 30000)
                 image_path, image, txts, rect_bboxes, oriented_bboxes = record
                 labels = len(rect_bboxes) * [1]
                 ignored = len(rect_bboxes) * [0]
-                print('IMG_PATH: ' + image_path)
+                #print('IMG_PATH: ' + image_path)
                 image_data = tf.gfile.FastGFile(image_path, 'rb').read()
                 
                 shape = image.shape
                 image_name = str(os.path.basename(image_path).split('.')[0])
-                print('IMG_NAME: ' + image_name)
+                #print('IMG_NAME: ' + image_name)
                 #image_name = str(util.io.get_filename(image_path).split('.')[0])
                 example = convert_to_example(image_data, image_name, labels, ignored, txts, rect_bboxes, oriented_bboxes, shape)
                 tfrecord_writer.write(example.SerializeToString())
@@ -295,7 +295,7 @@ if __name__ == "__main__":
     #mat_path = util.io.get_absolute_path('/share/SynthText/gt.mat')
     root_path = os.path.abspath(os.getcwd() + '/share/SynthText/')
     #root_path = util.io.get_absolute_path('/share/SynthText/')
-    output_dir = os.path.abspath('/home/bob/datasets/synth-tf/')
+    output_dir = os.path.abspath('/tank/rfarruggio/datasets/synth-tf/')
     #output_dir = util.io.get_absolute_path('/home/zsz/datasets/synth-tf/')
     try:
         os.mkdir(output_dir)
