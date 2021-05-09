@@ -1,9 +1,9 @@
 import os
 
-use_gpu = False
+use_gpu = True
 
 if use_gpu:
-    os.environ['CUDA_VISIBLE_DEVICES']= '6,7' # using GPU 0
+    os.environ['CUDA_VISIBLE_DEVICES']= '0' # using GPU 0
 else:
     os.environ['CUDA_VISIBLE_DEVICES']='-1'   # using only CPU
 
