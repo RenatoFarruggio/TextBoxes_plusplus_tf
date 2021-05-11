@@ -44,7 +44,7 @@ tf.app.flags.DEFINE_boolean(
 # Train & Deploy Flags.
 # =========================================================================== #
 tf.app.flags.DEFINE_string(
-    'train_dir', '/model/20190719',
+    'train_dir', '/tank/rfarruggio/Textboxes_plusplus_tf/model/20190719',
     'Directory where checkpoints and event logs are written to.'
 )
 # TODO:GPU number configuration
@@ -296,8 +296,6 @@ def main(_):
         text_anchors = text_net.anchors(img_shape)
 
         # Print the training configuration before training.
-        print("Sources directory:", dataset.data_sources)
-        print("Train directory:", FLAGS.train_dir)
         tf_utils.print_configuration(FLAGS.__flags, text_net.params, dataset.data_sources, FLAGS.train_dir)
 
         # =================================================================== #
