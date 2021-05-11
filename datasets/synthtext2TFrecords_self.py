@@ -299,7 +299,11 @@ if __name__ == "__main__":
     output_dir = os.path.abspath('/tank/rfarruggio/datasets/synth-tf/')
     #output_dir = util.io.get_absolute_path('/home/zsz/datasets/synth-tf/')
     try:
-        os.mkdirs(output_dir)
+        os.mkdir('/tank/rfarruggio/datasets/')
+    except FileExistsError:
+        pass
+    try:
+        os.mkdir(output_dir)
     except FileExistsError:
         pass
     #util.io.mkdir(output_dir)
