@@ -268,7 +268,7 @@ def cvt_to_tfrecords(output_path , data_path, gt_path, records_per_file = 30000)
                 image_idx += 1
                 if image_idx >= fetcher.num_images:
                     break
-                if image_idx + 1 % 10000 == 0 or image_idx + 1 == fetcher.num_images:
+                if image_idx == 1 or image_idx + 1 % 10000 == 0 or image_idx + 1 == fetcher.num_images:
                     print("loading image %d/%d"%(image_idx + 1, fetcher.num_images))
                 record = fetcher.fetch_record(image_idx)
                 if record is None:
