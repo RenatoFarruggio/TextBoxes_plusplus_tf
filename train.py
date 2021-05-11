@@ -219,17 +219,18 @@ tf.app.flags.DEFINE_string(
 )
 #TODO: stage1 -> 8k; stage2 -> 4k
 tf.app.flags.DEFINE_integer(
-	'max_number_of_steps', 120000, #8000
+	'max_number_of_steps', 8000,  #120000, #8000
     'The maxim number of training steps.'
 )
 # =========================================================================== #
 # Fine-Tuning Flags.
 # =========================================================================== #
 #TODO: indicate ckpt path for continuing stage 2 training.
-tf.app.flags.DEFINE_string(
-    'checkpoint_path', '/tank/rfarruggio/TextBoxes_plusplus_tf/model/ckpt/model_pre_train_syn.ckpt', #'./model/model.ckpt-8000.ckpt'
-    'The path to a checkpoint from which to fine-tune.'
-)
+# TODO: RENATO: COMMENT THIS IN
+#tf.app.flags.DEFINE_string(
+#    'checkpoint_path', '/tank/rfarruggio/TextBoxes_plusplus_tf/model/ckpt/model_pre_train_syn.ckpt', #'./model/model.ckpt-8000.ckpt'
+#    'The path to a checkpoint from which to fine-tune.'
+#)
 tf.app.flags.DEFINE_string(
     'checkpoint_model_scope', None,
     'Model scope in the checkpoint. None if the same as the trained model.'
