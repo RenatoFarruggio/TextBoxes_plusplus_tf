@@ -44,7 +44,7 @@ tf.app.flags.DEFINE_boolean(
 # Train & Deploy Flags.
 # =========================================================================== #
 tf.app.flags.DEFINE_string(
-    'train_dir', './model/20190719',
+    'train_dir', '/model/20190719',
     'Directory where checkpoints and event logs are written to.'
 )
 # TODO:GPU number configuration
@@ -187,7 +187,7 @@ tf.app.flags.DEFINE_string(
     'The name of the train/test split.'
 )
 tf.app.flags.DEFINE_string(
-    'dataset_dir', './tfrecords',
+    'dataset_dir', '/tank/rfarruggio/datasets/synth-tf',  #BEFORE: './tfrecords'
     'The directory where the dataset files are stored.'
 )
 tf.app.flags.DEFINE_integer(
@@ -227,7 +227,7 @@ tf.app.flags.DEFINE_integer(
 # =========================================================================== #
 #TODO: indicate ckpt path for continuing stage 2 training.
 tf.app.flags.DEFINE_string(
-    'checkpoint_path', './model/ckpt/model_pre_train_syn.ckpt', #'./model/model.ckpt-8000.ckpt'
+    'checkpoint_path', '/tank/rfarruggio/TextBoxes_plusplus_tf/model/ckpt/model_pre_train_syn.ckpt', #'./model/model.ckpt-8000.ckpt'
     'The path to a checkpoint from which to fine-tune.'
 )
 tf.app.flags.DEFINE_string(
