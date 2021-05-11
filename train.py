@@ -44,7 +44,7 @@ tf.app.flags.DEFINE_boolean(
 # Train & Deploy Flags.
 # =========================================================================== #
 tf.app.flags.DEFINE_string(
-    'train_dir', '/tank/rfarruggio/Textboxes_plusplus_tf/model/20190719',
+    'train_dir', '/tank/rfarruggio/TextBoxes_plusplus_tf/model/20190719',
     'Directory where checkpoints and event logs are written to.'
 )
 # TODO:GPU number configuration
