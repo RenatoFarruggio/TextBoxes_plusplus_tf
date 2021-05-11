@@ -227,7 +227,7 @@ tf.app.flags.DEFINE_integer(
 # =========================================================================== #
 #TODO: indicate ckpt path for continuing stage 2 training.
 tf.app.flags.DEFINE_string(
-    'checkpoint_path', '/tank/rfarruggio/TextBoxes_plusplus_tf/model/ckpt/model_pre_train_syn.ckpt', #'./model/model.ckpt-8000.ckpt'
+    'checkpoint_path', None, #'/tank/rfarruggio/TextBoxes_plusplus_tf/model/ckpt/model_pre_train_syn.ckpt', #'./model/model.ckpt-8000.ckpt'
     'The path to a checkpoint from which to fine-tune.'
 )
 tf.app.flags.DEFINE_string(
