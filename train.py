@@ -296,6 +296,8 @@ def main(_):
         text_anchors = text_net.anchors(img_shape)
 
         # Print the training configuration before training.
+        print("Sources directory:", dataset.data_sources)
+        print("Train directory:", FLAGS.train_dir)
         tf_utils.print_configuration(FLAGS.__flags, text_net.params, dataset.data_sources, FLAGS.train_dir)
 
         # =================================================================== #
