@@ -41,7 +41,7 @@ def plt_bboxes(img, classes, scores, bboxes, figsize=(10,10), linewidth=1.5):
 
 if use_gpu:
     # configure tf GPU using options.
-    gpu_options = tf.GPUOptions(allow_growth=False, per_process_gpu_memory_fraction=0.3)
+    gpu_options = tf.GPUOptions(allow_growth=True, per_process_gpu_memory_fraction=0.3)
     config = tf.ConfigProto(log_device_placement=False, gpu_options=gpu_options)
     isess = tf.Session(config=config) 
 else:
