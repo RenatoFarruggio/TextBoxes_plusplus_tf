@@ -292,20 +292,16 @@ def cvt_to_tfrecords(output_path , data_path, gt_path, records_per_file = 30000)
         fid += 1
                     
 if __name__ == "__main__":
-    mat_path = os.path.abspath(os.getcwd() + '/share/SynthText/gt.mat')
+    mat_path = os.path.abspath('/tank/rfarruggio/datasets/train/SynthText/gt.mat')
     #mat_path = util.io.get_absolute_path('/share/SynthText/gt.mat')
-    root_path = os.path.abspath(os.getcwd() + '/share/SynthText/')
+    root_path = os.path.abspath('/tank/rfarruggio/datasets/train/SynthText/')
     #root_path = util.io.get_absolute_path('/share/SynthText/')
-    output_dir = os.path.abspath('/tank/rfarruggio/datasets/synth-tf/')
+    output_dir = os.path.abspath('/tank/rfarruggio/TextBoxes_plusplus_tf/tfrecords/')
     #output_dir = util.io.get_absolute_path('/home/zsz/datasets/synth-tf/')
-    try:
+    if not os.path.exists('/tank/rfarruggio/datasets/'):
         os.mkdir('/tank/rfarruggio/datasets/')
-    except FileExistsError:
-        pass
-    try:
+    if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    except FileExistsError:
-        pass
     #util.io.mkdir(output_dir)
     #cvt_to_tfrecords(output_path = util.io.join_path(output_dir, 'SynthText_%d.tfrecord'),
     cvt_to_tfrecords(output_path = os.path.join(output_dir, 'SynthText_%d.tfrecord'),
