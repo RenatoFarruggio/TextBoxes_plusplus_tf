@@ -187,7 +187,7 @@ tf.app.flags.DEFINE_string(
     'The name of the train/test split.'
 )
 tf.app.flags.DEFINE_string(
-    'dataset_dir', '/tank/rfarruggio/datasets/synth-tf',  #BEFORE: './tfrecords'
+    'dataset_dir', './tfrecords',
     'The directory where the dataset files are stored.'
 )
 tf.app.flags.DEFINE_integer(
