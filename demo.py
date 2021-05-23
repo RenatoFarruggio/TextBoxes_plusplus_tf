@@ -67,7 +67,7 @@ print('reuse:',reuse)
 with slim.arg_scope(txt_net.arg_scope(data_format='NHWC')):
     predictions,localisations, logits, end_points = txt_net.net(image_4d, is_training=False, reuse=reuse)
 
-ckpt_dir = 'model/20190719'
+ckpt_dir = 'checkpoints'
 
 # REMINDER: THIS CREATES A LOT OF OUTPUT
 isess.run(tf.global_variables_initializer())
