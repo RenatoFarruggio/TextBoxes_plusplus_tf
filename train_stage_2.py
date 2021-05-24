@@ -37,7 +37,7 @@ tf.app.flags.DEFINE_float(
 )
 #TODO: Multi-scales training divide into two stages: 1.size=384, lr=10^-4; 2.size=786, lr=10^-5.
 tf.app.flags.DEFINE_boolean(
-	'large_training', False, #True
+	'large_training', True,
 	'Use 768 to train'
 )
 # =========================================================================== #
