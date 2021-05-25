@@ -49,7 +49,7 @@ tf.app.flags.DEFINE_string(
 )
 # TODO:GPU number configuration
 tf.app.flags.DEFINE_integer(
-	'num_clones', 2,
+	'num_clones', 1,
     'Number of model clones to GPU deploy.'
 )
 tf.app.flags.DEFINE_boolean(
