@@ -33,6 +33,7 @@ model_*/*
 test_result/*
 tfrecords/*
 checkpoints/*
+result/*
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
