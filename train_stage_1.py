@@ -219,7 +219,7 @@ tf.app.flags.DEFINE_string(
 )
 #TODO: stage1 -> 8k; stage2 -> 4k
 tf.app.flags.DEFINE_integer(
-	'max_number_of_steps', 8000,  #120000, #8000
+	'max_number_of_steps', 68000,  #120000, #8000
     'The maxim number of training steps.'
 )
 # =========================================================================== #
