@@ -57,7 +57,7 @@ tf.app.flags.DEFINE_boolean(
     'Use CPUs to deploy clones.'
 )
 tf.app.flags.DEFINE_integer(
-	'num_readers', 8,
+	'num_readers', 4,
     'The number of parallel readers that read data from the dataset.'
 )
 tf.app.flags.DEFINE_integer(
@@ -206,7 +206,7 @@ tf.app.flags.DEFINE_string(
     'as `None`, then the model_name flag is used.'
 )
 tf.app.flags.DEFINE_integer(
-	'batch_size', 8,
+	'batch_size', 4,
     'The number of samples in each batch.'
 )
 tf.app.flags.DEFINE_integer(
